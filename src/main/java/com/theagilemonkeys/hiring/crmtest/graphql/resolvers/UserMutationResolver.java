@@ -30,10 +30,14 @@ public class UserMutationResolver implements GraphQLMutationResolver {
     }
 
     public ApplicationUser updateUser(ApplicationUser updateRequest) {
+        if (updateRequest.getId() == null) {
+            throw new IllegalArgumentException("The update request must include an ID");
+        }
         if (updateRequest.getUsername() == null && updateRequest.getPassword() == null && updateRequest.getRole() == null) {
-            throw new IllegalArgumentException("The update request should include values for either" +
+            throw new IllegalArgumentException("The update request must include values for either" +
                     "the username, password or role");
         }
+
         LOGGER.info("Update request received: {}", updateRequest);
 
         ApplicationUser currentUser = userRepository.findById(updateRequest.getId()).orElseThrow(() -> new EntityNotFoundException("User not found"));

@@ -19,18 +19,19 @@ public class CustomerMutationResolver implements GraphQLMutationResolver {
     @Autowired
     private CustomerRepository customerRepository;
 
-    // TODO: Improve erroring! E.g. delete that no exists
-
     public Customer createCustomer(Customer newCustomer) {
         LOGGER.info("Received request to create customer: {}", newCustomer);
         return customerRepository.save(newCustomer);
     }
 
     public Customer updateCustomer(Customer updateRequest) {
+        if (updateRequest.getId() == null) {
+            throw new IllegalArgumentException("The update request must include an ID");
+        }
         if (updateRequest.getName() == null &&
                 updateRequest.getSurname() == null &&
                 updateRequest.getPictureUrl() == null) {
-            throw new IllegalArgumentException("The update request should include values for either name, surname or picture");
+            throw new IllegalArgumentException("The update request must include values for either name, surname or picture");
         }
 
         LOGGER.info("Update request received: {}", updateRequest);
