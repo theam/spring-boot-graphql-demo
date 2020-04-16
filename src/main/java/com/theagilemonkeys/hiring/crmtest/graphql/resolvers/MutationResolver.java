@@ -35,7 +35,7 @@ public class MutationResolver implements GraphQLMutationResolver {
 
         LOGGER.info("Update request received: {}", updateRequest);
 
-        Customer currentCustomer = customerRepository.findById(updateRequest.getId()).orElseThrow(EntityNotFoundException::new);
+        Customer currentCustomer = customerRepository.findById(updateRequest.getId()).orElseThrow(() -> new EntityNotFoundException("Customer not found"));
         currentCustomer.merge(updateRequest);
 
         return customerRepository.save(currentCustomer);

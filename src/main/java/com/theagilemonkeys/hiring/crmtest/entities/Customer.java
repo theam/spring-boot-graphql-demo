@@ -39,48 +39,54 @@ public class Customer {
         return id;
     }
 
-    public void setId(Long id) {
+    public Customer setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public Customer setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getSurname() {
         return surname;
     }
 
-    public void setSurname(String surname) {
+    public Customer setSurname(String surname) {
         this.surname = surname;
+        return this;
     }
 
     public String getPictureUrl() {
         return pictureUrl;
     }
 
-    public void setPictureUrl(String pictureUrl) {
+    public Customer setPictureUrl(String pictureUrl) {
         this.pictureUrl = pictureUrl;
+        return this;
     }
 
     public ApplicationUser getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(ApplicationUser createdBy) {
+    public Customer setCreatedBy(ApplicationUser createdBy) {
         this.createdBy = createdBy;
+        return this;
     }
 
     public ApplicationUser getUpdatedBy() {
         return updatedBy;
     }
 
-    public void setUpdatedBy(ApplicationUser updatedBy) {
+    public Customer setUpdatedBy(ApplicationUser updatedBy) {
         this.updatedBy = updatedBy;
+        return this;
     }
 
     @Override

@@ -25,6 +25,7 @@ input NewUser {
 }
 
 input UpdateUser {
+    id: ID!
     username: String
     password: String
     role: Role
@@ -49,17 +50,25 @@ input UserCredentials {
 }
 
 type Query {
+    # Any authenticated user
     getCustomers: [Customer]!
     getCustomer(id: ID!): Customer
+
+    # Only admin users
     getUsers: [User]!
 }
 
 type Mutation {
+    # No auth
     login(username: String!, password: String!): String!
-    #createUser(user: NewUser!): User!
-    #updateUser(user: UpdateUser!): User!
-    #deleteUser(id: ID!): Boolean
+
+    # Any authenticated user
     createCustomer(customer: NewCustomer!): Customer!
     updateCustomer(customer: UpdateCustomer!): Customer!
     deleteCustomer(id: ID!): Boolean
+
+    # Only admin users
+    createUser(user: NewUser!): User!
+    updateUser(user: UpdateUser!): User!
+    deleteUser(id: ID!): Boolean
 }
