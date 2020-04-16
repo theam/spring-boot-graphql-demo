@@ -17,9 +17,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // We don't need this
                 .cors().and().csrf().disable()
                 .authorizeRequests()
-                    // We're doing authentication at class-level. Ugly. We might want to separate log-in endpoint so that
-                    // we can enforce authentication in GraphQL API
-                    .anyRequest().permitAll()
+                    .antMatchers("/graphql").permitAll()
+                    .antMatchers("/graphiql", "/vendor/graphiql/*").permitAll()
+                    .antMatchers("/h2-console/*").permitAll()
+                    .anyRequest().denyAll()
                     .and()
                 .addFilter(new JWTAuthorizationFilter(authenticationManager()))
                 // Disables sessions
