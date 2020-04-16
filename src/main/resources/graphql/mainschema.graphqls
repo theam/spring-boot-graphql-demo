@@ -60,7 +60,7 @@ type Query {
 
 type Mutation {
     # No auth
-    login(username: String!, password: String!): String!
+    getToken(username: String!, password: String!): String!
 
     # Any authenticated user
     createCustomer(customer: NewCustomer!): Customer!

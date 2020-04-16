@@ -18,12 +18,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
+// TODO: Move constants to their own file
+// TODO: Remove this file
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     public static final String HEADER_STRING = "Authorization";
     public static final String TOKEN_PREFIX = "Bearer ";
     public static final String SECRET = "MySup3r Secret!";
-
-    private static final long EXPIRATION_TIME = 1 * 60 * 60 * 1000;
+    public static final long EXPIRATION_TIME = 1 * 60 * 60 * 1000;
 
     private AuthenticationManager authenticationManager;
 

@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityNotFoundException;
 
+// TODO: Add support for pictures
+
 @Component
 @Secured("IS_AUTHENTICATED_FULLY")
 public class CustomerMutationResolver implements GraphQLMutationResolver {
@@ -21,6 +23,9 @@ public class CustomerMutationResolver implements GraphQLMutationResolver {
 
     public Customer createCustomer(Customer newCustomer) {
         LOGGER.info("Received request to create customer: {}", newCustomer);
+
+        // TODO: Add createdBy+updatedBy
+
         return customerRepository.save(newCustomer);
     }
 
@@ -38,6 +43,8 @@ public class CustomerMutationResolver implements GraphQLMutationResolver {
 
         Customer currentCustomer = customerRepository.findById(updateRequest.getId()).orElseThrow(() -> new EntityNotFoundException("Customer not found"));
         currentCustomer.merge(updateRequest);
+
+        // TODO: Add updatedBy
 
         return customerRepository.save(currentCustomer);
     }

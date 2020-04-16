@@ -20,11 +20,15 @@ public class UserMutationResolver implements GraphQLMutationResolver {
     private ApplicationUserRepository userRepository;
 
     public ApplicationUser createUser(ApplicationUser user) {
-        LOGGER.info("Received request to create an user with: {}", user);
+        // TODO: Encrypt password
 
         if (user.getRole() == null) {
             user.setRole(ApplicationUser.Role.NORMAL);
         }
+
+        LOGGER.info("Received request to create an user with: {}", user);
+
+
 
         return userRepository.save(user);
     }

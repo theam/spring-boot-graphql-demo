@@ -1,6 +1,11 @@
 package com.theagilemonkeys.hiring.crmtest.security;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.theagilemonkeys.hiring.crmtest.entities.ApplicationUser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,12 +16,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.logging.ErrorManager;
 
 import static com.theagilemonkeys.hiring.crmtest.security.JWTAuthenticationFilter.HEADER_STRING;
+import static com.theagilemonkeys.hiring.crmtest.security.JWTAuthenticationFilter.SECRET;
 import static com.theagilemonkeys.hiring.crmtest.security.JWTAuthenticationFilter.TOKEN_PREFIX;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
+    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     public JWTAuthorizationFilter(AuthenticationManager authManager) {
         super(authManager);
@@ -43,21 +52,18 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         String token = request.getHeader(HEADER_STRING);
         if (token != null) {
             // parse the token.
-            /*String user = JWT.require(Algorithm.HMAC512(SECRET.getBytes()))
+            DecodedJWT decodedToken = JWT.require(Algorithm.HMAC512(SECRET.getBytes()))
                     .build()
-                    .verify(token.replace(TOKEN_PREFIX, ""))
-                    .getSubject();
+                    .verify(token.replace(TOKEN_PREFIX, ""));
 
-            if (user != null) {
-                return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
+            String userId = decodedToken.getSubject();
+            ApplicationUser.Role userRole = decodedToken.getClaim("role").as(ApplicationUser.Role.class);
+
+            if (userId != null) {
+                return new UsernamePasswordAuthenticationToken(userId, null, Collections.singletonList(userRole));
             }
-            return null;*/
 
-            ApplicationUser user = new ApplicationUser();
-            user.setUsername("admin");
-            user.setRole(ApplicationUser.Role.ADMIN);
-
-            return new UsernamePasswordAuthenticationToken(user.getUsername(), null, Collections.singletonList(user.getRole()));
+            LOGGER.error("Valid token contains no user info");
         }
         return null;
     }

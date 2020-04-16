@@ -69,7 +69,6 @@ public class ApplicationUser {
         return new ToStringBuilder(this)
                 .append("id", id)
                 .append("username", username)
-                .append("password", password)
                 .append("role", role)
                 .toString();
     }

@@ -11,12 +11,11 @@ import org.springframework.stereotype.Service;
 
 import static java.util.Collections.emptyList;
 
-@Service
-public class UserDetailsServiceImpl implements UserDetailsService {
+// TODO: Delete this once I confirm it's not needed
+public class UserDetailsServiceImpl{
     @Autowired
     private ApplicationUserRepository applicationUserRepository;
 
-    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         ApplicationUser applicationUser = applicationUserRepository.findByUsername(username);
         if (applicationUser == null) {
