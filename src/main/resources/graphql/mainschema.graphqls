@@ -1,0 +1,65 @@
+type Customer {
+    id: ID!
+    name: String!
+    surname: String!
+    pictureUrl: String
+    createdBy: ID
+    updatedBy: ID
+}
+
+enum Role {
+    NORMAL
+    ADMIN
+}
+
+type User {
+    id: ID!
+    username: String!
+    role: Role!
+}
+
+input NewUser {
+    username: String!
+    password: String!
+    role: Role = NORMAL
+}
+
+input UpdateUser {
+    username: String
+    password: String
+    role: Role
+}
+
+input NewCustomer {
+    name: String!
+    surname: String!
+    picture: String
+}
+
+input UpdateCustomer {
+    id: ID!
+    name: String
+    surname: String
+    picture: String
+}
+
+input UserCredentials {
+    username: String!
+    password: String!
+}
+
+type Query {
+    getCustomers: [Customer]!
+    getCustomer(id: ID!): Customer
+    getUsers: [User]!
+}
+
+type Mutation {
+    login(username: String!, password: String!): String!
+    #createUser(user: NewUser!): User!
+    #updateUser(user: UpdateUser!): User!
+    #deleteUser(id: ID!): Boolean
+    createCustomer(customer: NewCustomer!): Customer!
+    updateCustomer(customer: UpdateCustomer!): Customer!
+    deleteCustomer(id: ID!): Boolean
+}
