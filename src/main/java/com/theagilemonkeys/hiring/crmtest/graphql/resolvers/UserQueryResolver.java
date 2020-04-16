@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-@Secured({"IS_AUTHENTICATED_FULLY", "ROLE_ADMIN"})
-public class AdminOnlyQueryResolver implements GraphQLQueryResolver {
+@Secured("ROLE_ADMIN")
+public class UserQueryResolver implements GraphQLQueryResolver {
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     @Autowired

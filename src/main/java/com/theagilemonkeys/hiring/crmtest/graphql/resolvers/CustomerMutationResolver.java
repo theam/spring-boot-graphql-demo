@@ -13,7 +13,7 @@ import javax.persistence.EntityNotFoundException;
 
 @Component
 @Secured("IS_AUTHENTICATED_FULLY")
-public class MutationResolver implements GraphQLMutationResolver {
+public class CustomerMutationResolver implements GraphQLMutationResolver {
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     @Autowired

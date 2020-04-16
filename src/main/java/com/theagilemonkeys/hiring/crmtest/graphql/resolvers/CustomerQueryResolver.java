@@ -1,6 +1,8 @@
 package com.theagilemonkeys.hiring.crmtest.graphql.resolvers;
 
+import com.theagilemonkeys.hiring.crmtest.entities.ApplicationUser;
 import com.theagilemonkeys.hiring.crmtest.entities.Customer;
+import com.theagilemonkeys.hiring.crmtest.repositories.ApplicationUserRepository;
 import com.theagilemonkeys.hiring.crmtest.repositories.CustomerRepository;
 import graphql.kickstart.tools.GraphQLQueryResolver;
 import org.slf4j.Logger;
@@ -14,7 +16,7 @@ import java.util.Optional;
 
 @Component
 @Secured("IS_AUTHENTICATED_FULLY")
-public class QueryResolver implements GraphQLQueryResolver {
+public class CustomerQueryResolver implements GraphQLQueryResolver {
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     @Autowired

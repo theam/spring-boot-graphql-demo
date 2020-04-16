@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 import javax.persistence.EntityNotFoundException;
 
 @Component
-@Secured({"IS_AUTHENTICATED_FULLY", "ROLE_ADMIN"})
-public class AdminOnlyMutationResolver implements GraphQLMutationResolver {
+@Secured("ROLE_ADMIN")
+public class UserMutationResolver implements GraphQLMutationResolver {
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
