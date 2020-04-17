@@ -1,15 +1,15 @@
-package com.theagilemonkeys.hiring.crmtest.security;
+package com.theagilemonkeys.hiring.crmtest.security.jwt;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.DecodedJWT;
-import com.theagilemonkeys.hiring.crmtest.entities.ApplicationUser;
+import com.theagilemonkeys.hiring.crmtest.security.TokenPayload;
+import com.theagilemonkeys.hiring.crmtest.security.TokenUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -18,15 +18,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
 
-import static com.theagilemonkeys.hiring.crmtest.security.JWTAuthenticationFilter.HEADER_STRING;
-import static com.theagilemonkeys.hiring.crmtest.security.JWTAuthenticationFilter.SECRET;
-import static com.theagilemonkeys.hiring.crmtest.security.JWTAuthenticationFilter.TOKEN_PREFIX;
+import static com.theagilemonkeys.hiring.crmtest.security.TokenUtils.HEADER_STRING;
+import static com.theagilemonkeys.hiring.crmtest.security.TokenUtils.TOKEN_PREFIX;
 
+@Component
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+    private final TokenUtils tokenUtils;
 
-    public JWTAuthorizationFilter(AuthenticationManager authManager) {
+    public JWTAuthorizationFilter(AuthenticationManager authManager, TokenUtils tokenUtils) {
         super(authManager);
+        this.tokenUtils = tokenUtils;
     }
 
     @Override
@@ -49,16 +51,10 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
         String token = request.getHeader(HEADER_STRING);
         if (token != null) {
-            // parse the token.
-            DecodedJWT decodedToken = JWT.require(Algorithm.HMAC512(SECRET.getBytes()))
-                    .build()
-                    .verify(token.replace(TOKEN_PREFIX, ""));
+            TokenPayload tokenPayload = tokenUtils.decodeToken(token);
 
-            String userId = decodedToken.getSubject();
-            ApplicationUser.Role userRole = decodedToken.getClaim("role").as(ApplicationUser.Role.class);
-
-            if (userId != null) {
-                return new UsernamePasswordAuthenticationToken(userId, null, Collections.singletonList(userRole));
+            if (tokenPayload.getUsername() != null) {
+                return new UsernamePasswordAuthenticationToken(tokenPayload.getUsername(), null, Collections.singletonList(tokenPayload.getRole()));
             }
 
             LOGGER.error("Valid token contains no user info");

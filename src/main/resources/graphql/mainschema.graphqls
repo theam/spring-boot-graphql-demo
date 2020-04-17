@@ -3,8 +3,8 @@ type Customer {
     name: String!
     surname: String!
     pictureUrl: String
-    createdBy: ID
-    updatedBy: ID
+    createdBy: String!
+    updatedBy: String!
 }
 
 enum Role {

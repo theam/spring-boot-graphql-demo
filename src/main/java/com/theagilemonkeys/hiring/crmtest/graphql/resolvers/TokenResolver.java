@@ -31,7 +31,7 @@ public class TokenResolver implements GraphQLMutationResolver {
             throw new GraphQLException("Invalid credentials");
         }
 
-        return tokenGenerator.build(applicationUser.getId(), applicationUser.getRole());
+        return tokenGenerator.build(applicationUser.getUsername(), applicationUser.getRole());
     }
 
 

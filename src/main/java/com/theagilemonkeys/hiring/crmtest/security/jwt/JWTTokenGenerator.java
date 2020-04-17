@@ -1,13 +1,14 @@
-package com.theagilemonkeys.hiring.crmtest.security;
+package com.theagilemonkeys.hiring.crmtest.security.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.theagilemonkeys.hiring.crmtest.security.TokenGenerator;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-import static com.theagilemonkeys.hiring.crmtest.security.JWTAuthenticationFilter.EXPIRATION_TIME;
-import static com.theagilemonkeys.hiring.crmtest.security.JWTAuthenticationFilter.SECRET;
+import static com.theagilemonkeys.hiring.crmtest.security.TokenUtils.EXPIRATION_TIME;
+import static com.theagilemonkeys.hiring.crmtest.security.TokenUtils.SECRET;
 
 @Component
 public class JWTTokenGenerator implements TokenGenerator {

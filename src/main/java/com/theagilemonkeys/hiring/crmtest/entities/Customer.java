@@ -27,13 +27,9 @@ public class Customer {
 
     private String pictureUrl;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "created_by")
-    private ApplicationUser createdBy;
+    private String createdBy;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "updated_by")
-    private ApplicationUser updatedBy;
+    private String updatedBy;
 
     public Long getId() {
         return id;
@@ -71,20 +67,20 @@ public class Customer {
         return this;
     }
 
-    public ApplicationUser getCreatedBy() {
+    public String getCreatedBy() {
         return createdBy;
     }
 
-    public Customer setCreatedBy(ApplicationUser createdBy) {
+    public Customer setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
         return this;
     }
 
-    public ApplicationUser getUpdatedBy() {
+    public String getUpdatedBy() {
         return updatedBy;
     }
 
-    public Customer setUpdatedBy(ApplicationUser updatedBy) {
+    public Customer setUpdatedBy(String updatedBy) {
         this.updatedBy = updatedBy;
         return this;
     }
