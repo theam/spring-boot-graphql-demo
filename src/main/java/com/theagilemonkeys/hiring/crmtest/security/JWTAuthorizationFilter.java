@@ -16,9 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.logging.ErrorManager;
 
 import static com.theagilemonkeys.hiring.crmtest.security.JWTAuthenticationFilter.HEADER_STRING;
 import static com.theagilemonkeys.hiring.crmtest.security.JWTAuthenticationFilter.SECRET;

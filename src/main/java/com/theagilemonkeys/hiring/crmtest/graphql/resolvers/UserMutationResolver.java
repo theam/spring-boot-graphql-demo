@@ -1,12 +1,15 @@
 package com.theagilemonkeys.hiring.crmtest.graphql.resolvers;
 
+import com.theagilemonkeys.hiring.crmtest.exceptions.DuplicateEntryException;
 import com.theagilemonkeys.hiring.crmtest.entities.ApplicationUser;
 import com.theagilemonkeys.hiring.crmtest.repositories.ApplicationUserRepository;
 import graphql.kickstart.tools.GraphQLMutationResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityNotFoundException;
@@ -19,8 +22,11 @@ public class UserMutationResolver implements GraphQLMutationResolver {
     @Autowired
     private ApplicationUserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public ApplicationUser createUser(ApplicationUser user) {
-        // TODO: Encrypt password
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         if (user.getRole() == null) {
             user.setRole(ApplicationUser.Role.NORMAL);
@@ -28,9 +34,11 @@ public class UserMutationResolver implements GraphQLMutationResolver {
 
         LOGGER.info("Received request to create an user with: {}", user);
 
-
-
-        return userRepository.save(user);
+        try {
+            return userRepository.save(user);
+        } catch (DataIntegrityViolationException e) {
+            throw new DuplicateEntryException(e);
+        }
     }
 
     public ApplicationUser updateUser(ApplicationUser updateRequest) {

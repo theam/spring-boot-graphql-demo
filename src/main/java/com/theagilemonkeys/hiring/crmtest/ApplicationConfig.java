@@ -1,5 +1,7 @@
 package com.theagilemonkeys.hiring.crmtest;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.theagilemonkeys.hiring.crmtest.exceptions.DuplicateEntryException;
 import graphql.GraphQLError;
 import graphql.kickstart.spring.error.ThrowableGraphQLError;
 import org.slf4j.Logger;
@@ -20,5 +22,10 @@ public class ApplicationConfig {
     @ExceptionHandler(AccessDeniedException.class)
     public GraphQLError exceptionHandler(AccessDeniedException e) {
         return new ThrowableGraphQLError(e, "Unauthorized request");
+    }
+
+    @ExceptionHandler(DuplicateEntryException.class)
+    public GraphQLError exceptionHandler(DuplicateEntryException e) {
+        return new ThrowableGraphQLError(e, "Duplicated entry");
     }
 }
