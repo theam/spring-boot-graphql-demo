@@ -1,4 +1,6 @@
 # Spring boot demo with GraphQL and JWT auth
+## Implementation details
+### Tech stack
 Implemented using:
 - JDK 11
 - Spring Boot 2.2.6
@@ -7,6 +9,13 @@ Implemented using:
 - GraphQL-boot-starter 7.0.1
 - H2 database (in-memory)
 - JWT
+
+### Approach taken
+- JWT authentification
+- Role-based authorization (only admins can access Users API)
+- No REST API at all
+- Client can get the token from the GraphQL API itself
+- Custom error handling to create descriptive error messages  
 
 ## License
 MIT License
