@@ -1,0 +1,9 @@
+graphql:
+    servlet:
+        enabled: true
+        exception-handlers-enabled: true
+token:
+    header-name: "Authorization"
+    prefix: "Bearer "
+    secret-password: "MySup3r Secret!"
+    duration-ms: 3600000

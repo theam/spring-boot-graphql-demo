@@ -11,9 +11,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class JWTTokenUtils extends TokenUtils {
     public TokenPayload decodeToken(String authorizationHeader) {
-        DecodedJWT decodedToken = JWT.require(Algorithm.HMAC512(SECRET.getBytes()))
+        DecodedJWT decodedToken = JWT.require(Algorithm.HMAC512(getSecret().getBytes()))
                 .build()
-                .verify(authorizationHeader.replace(TOKEN_PREFIX, ""));
+                .verify(authorizationHeader.replace(getTokenPrefix(), ""));
 
         return new TokenPayload(decodedToken.getSubject(), decodedToken.getClaim("role").as(ApplicationUser.Role.class));
     }

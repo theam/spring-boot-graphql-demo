@@ -4,7 +4,6 @@ import com.theagilemonkeys.hiring.crmtest.security.TokenPayload;
 import com.theagilemonkeys.hiring.crmtest.security.TokenUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,9 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
-
-import static com.theagilemonkeys.hiring.crmtest.security.TokenUtils.HEADER_STRING;
-import static com.theagilemonkeys.hiring.crmtest.security.TokenUtils.TOKEN_PREFIX;
 
 @Component
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
@@ -35,9 +31,9 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     protected void doFilterInternal(HttpServletRequest req,
                                     HttpServletResponse res,
                                     FilterChain chain) throws IOException, ServletException {
-        String header = req.getHeader(HEADER_STRING);
+        String header = req.getHeader(tokenUtils.getHeaderString());
 
-        if (header == null || !header.startsWith(TOKEN_PREFIX)) {
+        if (header == null || !header.startsWith(tokenUtils.getTokenPrefix())) {
             chain.doFilter(req, res);
             return;
         }
@@ -49,7 +45,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     }
 
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
-        String token = request.getHeader(HEADER_STRING);
+        String token = request.getHeader(tokenUtils.getHeaderString());
         if (token != null) {
             TokenPayload tokenPayload = tokenUtils.decodeToken(token);
 
