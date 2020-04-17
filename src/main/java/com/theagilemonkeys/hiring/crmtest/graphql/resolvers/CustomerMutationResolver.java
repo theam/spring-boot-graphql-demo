@@ -14,8 +14,6 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityNotFoundException;
 
-// TODO: Add support for pictures
-
 @Component
 @Secured("IS_AUTHENTICATED_FULLY")
 public class CustomerMutationResolver implements GraphQLMutationResolver {
@@ -42,9 +40,8 @@ public class CustomerMutationResolver implements GraphQLMutationResolver {
             throw new IllegalArgumentException("The update request must include an ID");
         }
         if (updateRequest.getName() == null &&
-                updateRequest.getSurname() == null &&
-                updateRequest.getPictureUrl() == null) {
-            throw new IllegalArgumentException("The update request must include values for either name, surname or picture");
+                updateRequest.getSurname() == null) {
+            throw new IllegalArgumentException("The update request must include values for either name, surname");
         }
 
         LOGGER.info("Update request received: {}", updateRequest);

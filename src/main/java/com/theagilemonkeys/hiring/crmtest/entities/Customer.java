@@ -2,14 +2,10 @@ package com.theagilemonkeys.hiring.crmtest.entities;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
 
@@ -24,8 +20,6 @@ public class Customer {
 
     @NotNull
     private String surname;
-
-    private String pictureUrl;
 
     private String createdBy;
 
@@ -58,15 +52,6 @@ public class Customer {
         return this;
     }
 
-    public String getPictureUrl() {
-        return pictureUrl;
-    }
-
-    public Customer setPictureUrl(String pictureUrl) {
-        this.pictureUrl = pictureUrl;
-        return this;
-    }
-
     public String getCreatedBy() {
         return createdBy;
     }
@@ -91,7 +76,6 @@ public class Customer {
                 .append("id", id)
                 .append("name", name)
                 .append("surname", surname)
-                .append("pictureUrl", pictureUrl)
                 .append("createdBy", createdBy)
                 .append("updatedBy", updatedBy)
                 .toString();
@@ -100,7 +84,6 @@ public class Customer {
     public Customer merge(Customer updateRequest) {
         Optional.ofNullable(updateRequest.getName()).ifPresent(this::setName);
         Optional.ofNullable(updateRequest.getSurname()).ifPresent(this::setSurname);
-        Optional.ofNullable(updateRequest.getPictureUrl()).ifPresent(this::setPictureUrl);
 
         return this;
     }

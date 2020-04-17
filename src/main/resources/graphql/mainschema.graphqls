@@ -2,7 +2,6 @@ type Customer {
     id: ID!
     name: String!
     surname: String!
-    pictureUrl: String
     createdBy: String!
     updatedBy: String!
 }
@@ -34,14 +33,12 @@ input UpdateUser {
 input NewCustomer {
     name: String!
     surname: String!
-    picture: String
 }
 
 input UpdateCustomer {
     id: ID!
     name: String
     surname: String
-    picture: String
 }
 
 input UserCredentials {

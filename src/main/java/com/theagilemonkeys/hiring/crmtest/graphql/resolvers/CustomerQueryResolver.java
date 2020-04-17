@@ -1,8 +1,6 @@
 package com.theagilemonkeys.hiring.crmtest.graphql.resolvers;
 
-import com.theagilemonkeys.hiring.crmtest.entities.ApplicationUser;
 import com.theagilemonkeys.hiring.crmtest.entities.Customer;
-import com.theagilemonkeys.hiring.crmtest.repositories.ApplicationUserRepository;
 import com.theagilemonkeys.hiring.crmtest.repositories.CustomerRepository;
 import graphql.kickstart.tools.GraphQLQueryResolver;
 import org.slf4j.Logger;
