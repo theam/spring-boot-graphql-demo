@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Run server local" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="crm-test-spring-boot-graphql-demo" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.theagilemonkeys.hiring.crmtest.CrmTestApplication" />
+    <option name="ACTIVE_PROFILES" value="local" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
